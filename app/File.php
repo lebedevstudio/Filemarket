@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\{
 
 class File extends Model
 {
-	use SoftDeletes;
+    use SoftDeletes;
 
     /**
      * @var array
@@ -65,7 +65,7 @@ class File extends Model
      */
     public function user()
     {
-    	return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -73,6 +73,6 @@ class File extends Model
      */
     public function getRouteKeyName()
     {
-    	return 'identifier';
+        return 'identifier';
     }
 }

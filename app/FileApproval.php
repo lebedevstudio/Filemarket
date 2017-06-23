@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\{
 
 class FileApproval extends Model
 {
-	use SoftDeletes;
+    use SoftDeletes;
 
     /**
      * @var string

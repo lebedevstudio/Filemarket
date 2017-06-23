@@ -24,15 +24,15 @@ class FileController extends Controller
      */
     public function create(File $file)
     {
-    	if (! $file->exists) {
-    		$file = $this->createEmptyFile();
+        if (!$file->exists) {
+            $file = $this->createEmptyFile();
 
-    		return redirect()->route('account.files.create', $file);
-    	}
+            return redirect()->route('account.files.create', $file);
+        }
 
-    	$this->authorize('touch', $file);
+        $this->authorize('touch', $file);
 
-    	return view('account.files.create', compact('file'));
+        return view('account.files.create', compact('file'));
     }
 
     /**
@@ -42,14 +42,14 @@ class FileController extends Controller
      */
     public function store(File $file, StoreFileRequest $request)
     {
-    	$this->authorize('touch', $file);
+        $this->authorize('touch', $file);
 
-    	$file->update(array_merge(
-    		$request->only(['title', 'overview_short', 'overview', 'price']),
+        $file->update(array_merge(
+            $request->only(['title', 'overview_short', 'overview', 'price']),
             ['finished' => true]
-    	));
+        ));
 
-    	return redirect()
+        return redirect()
             ->route('account.files.index')
             ->withSuccess('Новый файл успешно создан.');
     }
@@ -61,7 +61,7 @@ class FileController extends Controller
     public function edit(File $file)
     {
         $this->authorize('touch', $file);
-        
+
         return view('account.files.edit', compact('file'));
     }
 
@@ -70,12 +70,12 @@ class FileController extends Controller
      */
     protected function createEmptyFile()
     {
-    	return auth()->user()->files()->create([
-    		'title' => 'Новый',
-    		'overview_short' => 'Пусто',
-    		'overview' => 'Пусто',
-    		'price' => 0,
-    		'finished' => false,
-    	]);
+        return auth()->user()->files()->create([
+            'title' => 'Новый',
+            'overview_short' => 'Пусто',
+            'overview' => 'Пусто',
+            'price' => 0,
+            'finished' => false,
+        ]);
     }
 }

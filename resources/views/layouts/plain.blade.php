@@ -7,7 +7,7 @@
         <div id="root">
             @yield('content')
         </div>
-        
+
         @include('layouts.partials.scripts')
     </body>
 </html>

@@ -1,5 +1,5 @@
 @extends('account.layouts.default')
 
 @section('account.content')
-	account
+    account
 @endsection

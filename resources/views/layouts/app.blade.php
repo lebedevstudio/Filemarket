@@ -9,7 +9,7 @@
 
             @yield('content')
         </div>
-        
+
         @include('layouts.partials.scripts')
     </body>
 </html>

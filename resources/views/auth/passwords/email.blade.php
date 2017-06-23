@@ -19,7 +19,9 @@
                         <div class="field">
                             <label for="email" class="label">Эл. почта</label>
                             <p class="control">
-                                <input type="email" name="email" id="email" class="input{{ $errors->has('email') ? ' is-danger' : '' }}" value="{{ old('email') }}" required placeholder="ivan@ivan.ru">
+                                <input type="email" name="email" id="email"
+                                       class="input{{ $errors->has('email') ? ' is-danger' : '' }}"
+                                       value="{{ old('email') }}" required placeholder="ivan@ivan.ru">
                             </p>
                             @if ($errors->has('email'))
                                 <p class="help is-danger">
