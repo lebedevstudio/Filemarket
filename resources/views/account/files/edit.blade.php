@@ -5,14 +5,19 @@
         Редактирование: {{ $file->title }}
     </h1>
 
-    <form action="{{ route('account.files.store', compact('file')) }}" method="post" class="form">
+    @if($approval)
+        @include('account.files.partials.approval', compact('approval', 'file'))
+    @endif
+
+    <form action="{{ route('account.files.update', $file) }}" method="post" class="form">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
 
         <div class="field">
             <p class="control">
                 <label for="live" class="checkbox">
-                    <input type="checkbox" name="live" id="live" {{ $file->live ? 'checked' : '' }}>
+                    <input type="checkbox" name="live" id="live"
+                           {{ $file->live ? 'checked' : '' }} value="{{ 'checked' ? true : false }}">
                     Опубликовано
                 </label>
             </p>

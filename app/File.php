@@ -10,6 +10,10 @@ class File extends Model
 {
     use SoftDeletes;
 
+    const APPROVAL_PROPERTIES = [
+        'title', 'overview_short', 'overview'
+    ];
+
     /**
      * @var array
      */
@@ -25,6 +29,27 @@ class File extends Model
         static::creating(function ($file) {
             $file->identifier = uniqid(true);
         });
+    }
+
+    /**
+     * @param array $properties
+     */
+    public function createApproval(array $properties): void
+    {
+        $this->approvals()->create($properties);
+    }
+
+    /**
+     * @param array $properties
+     * @return bool
+     */
+    public function needsApproval(array $properties): bool
+    {
+        if ($this->approvalPropertiesHasDifference($properties)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -46,7 +71,7 @@ class File extends Model
     /**
      * @return bool
      */
-    public function isFree()
+    public function isFree(): bool
     {
         return $this->price == 0;
     }
@@ -74,5 +99,14 @@ class File extends Model
     public function getRouteKeyName()
     {
         return 'identifier';
+    }
+
+    /**
+     * @param array $properties
+     * @return bool
+     */
+    protected function approvalPropertiesHasDifference(array $properties): bool
+    {
+        return array_only($this->toArray(), self::APPROVAL_PROPERTIES) != $properties;
     }
 }

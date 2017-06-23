@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Account;
 
 use App\File;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFileRequest;
+use App\Http\Requests\{
+    StoreFileRequest, UpdateFileRequest
+};
 
 class FileController extends Controller
 {
@@ -49,9 +51,33 @@ class FileController extends Controller
             ['finished' => true]
         ));
 
-        return redirect()
-            ->route('account.files.index')
+        return redirect()->route('account.files.index')
             ->withSuccess('Новый файл успешно создан.');
+    }
+
+    /**
+     * @param File $file
+     * @param UpdateFileRequest $request
+     * @return mixed
+     */
+    public function update(File $file, UpdateFileRequest $request)
+    {
+        $this->authorize('touch', $file);
+
+        $properties = $request->only(File::APPROVAL_PROPERTIES);
+
+        if ($file->needsApproval($properties)) {
+            $file->createApproval($properties);
+
+            return back()->withSuccess('Файл был изменен. Мы рассмотрим все изменения как можно быстрее!');
+        }
+
+        $file->update([
+            'live' => $request->get('live', false),
+            'price' => $request->get('price'),
+        ]);
+
+        return back()->withSuccess('Файл успешно обновлен.');
     }
 
     /**
@@ -62,7 +88,9 @@ class FileController extends Controller
     {
         $this->authorize('touch', $file);
 
-        return view('account.files.edit', compact('file'));
+        $approval = $file->approvals()->latest()->first();
+
+        return view('account.files.edit', compact('file', 'approval'));
     }
 
     /**
