@@ -21,6 +21,14 @@
                 <strong>Описание</strong>
                 <p>{{ $approvals->overview }}</p>
             @endif
+
+            @if(($uploads = $file->uploads()->notApproved()->get())->count())
+                <strong>Файлы</strong>
+
+                @foreach($uploads as $upload)
+                        <p>{{ $upload->filename }}</p>
+                @endforeach
+            @endif
         </div>
     </div>
 </article>

@@ -13,6 +13,16 @@
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
 
+        <input type="hidden" name="uploads" value="{{ $file->id }}">
+
+        <div class="field">
+            <div id="file" class="dropzone"></div>
+
+            @if($errors->has('uploads'))
+                <p class="help is-danger">{{ $errors->first('uploads') }}</p>
+            @endif
+        </div>
+
         <div class="field">
             <p class="control">
                 <label for="live" class="checkbox">
@@ -77,4 +87,8 @@
             <p>Прежде чем ваш курс будет обновлен, все изменения будут рассмотрены нашими администраторами.</p>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    @include('account.files.scripts.file_upload')
 @endsection

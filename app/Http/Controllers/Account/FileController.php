@@ -48,7 +48,8 @@ class FileController extends Controller
 
         $file->update($this->fileFields($request));
 
-        return redirect()->route('account.files.index')
+        return redirect()
+            ->route('account.files.index')
             ->withSuccess('Новый файл успешно создан.');
     }
 
@@ -66,7 +67,8 @@ class FileController extends Controller
         if ($file->needsApproval($properties)) {
             $file->createApproval($properties);
 
-            return back()->withSuccess('Файл был изменен. Мы рассмотрим все изменения как можно быстрее!');
+            return back()
+                ->withSuccess('Файл был изменен. Мы рассмотрим все изменения как можно быстрее!');
         }
 
         $file->update([
@@ -74,7 +76,8 @@ class FileController extends Controller
             'price' => $request->get('price'),
         ]);
 
-        return back()->withSuccess('Файл успешно обновлен.');
+        return back()
+            ->withSuccess('Файл успешно обновлен.');
     }
 
     /**

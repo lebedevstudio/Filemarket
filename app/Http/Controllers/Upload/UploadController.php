@@ -29,12 +29,27 @@ class UploadController extends Controller
         $upload = $this->storeUpload($file, $uploadedFile);
 
         Storage::disk('local')->putFileAs(
-            'files/' . $file->identifier,
-            $uploadedFile,
-            $this->getFilename($uploadedFile)
+            'files/' . $file->identifier, $uploadedFile, $upload->filename
         );
 
         return response()->json(['id' => $upload->id]);
+    }
+
+    /**
+     * @param File $file
+     * @param Upload $upload
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(File $file, Upload $upload)
+    {
+        $this->authorize('touch', $file);
+        $this->authorize('touch', $upload);
+
+        if ($this->oneFileLeft($file)) {
+            return response()->json(null, 422);
+        }
+
+        $upload->delete();
     }
 
     /**
@@ -75,5 +90,14 @@ class UploadController extends Controller
     protected function getFileSize(UploadedFile $uploadedFile): int
     {
         return $uploadedFile->getSize();
+    }
+
+    /**
+     * @param File $file
+     * @return bool
+     */
+    protected function oneFileLeft(File $file): bool
+    {
+        return $file->uploads->count() === 1;
     }
 }

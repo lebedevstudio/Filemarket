@@ -8,8 +8,14 @@
     <form action="{{ route('account.files.store', compact('file')) }}" method="post" class="form">
         {{ csrf_field() }}
 
+        <input type="hidden" name="uploads" value="{{ $file->id }}">
+
         <div class="field">
             <div id="file" class="dropzone"></div>
+
+            @if($errors->has('uploads'))
+                <p class="help is-danger">{{ $errors->first('uploads') }}</p>
+            @endif
         </div>
 
         <div class="field">
@@ -66,5 +72,5 @@
 @endsection
 
 @section('scripts')
-    @include('files.partials.scripts.file_upload')
+    @include('account.files.scripts.file_upload')
 @endsection
