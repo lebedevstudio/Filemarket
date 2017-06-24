@@ -33,14 +33,6 @@ class File extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function uploads()
-    {
-        return $this->hasMany(Upload::class);
-    }
-
-    /**
      * @param array $properties
      */
     public function createApproval(array $properties): void
@@ -66,14 +58,6 @@ class File extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function approvals()
-    {
-        return $this->hasMany(FileApproval::class);
-    }
-
-    /**
      * @return mixed
      */
     public function isLive()
@@ -96,6 +80,22 @@ class File extends Model
     public function scopeFinished(Builder $builder)
     {
         return $builder->where('finished', true);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function uploads()
+    {
+        return $this->hasMany(Upload::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function approvals()
+    {
+        return $this->hasMany(FileApproval::class);
     }
 
     /**

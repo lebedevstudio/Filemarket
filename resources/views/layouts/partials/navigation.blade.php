@@ -18,6 +18,12 @@
                    onclick="event.preventDefault(); document.getElementById('logout').submit();">Выход</a>
 
                 <a href="{{ route('account') }}" class="nav-item">Мой аккаунт</a>
+
+                @role('admin')
+                    <a href="#" class="nav-item">
+                        <button class="button is-primary">Админ</button>
+                    </a>
+                @endrole
             @else
                 <a href="{{ route('login') }}" class="nav-item">Войти</a>
 

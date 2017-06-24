@@ -1,5 +1,9 @@
 <?php
 
+Route::get('/dev', function () {
+    dd(auth()->user()->hasRole('admin'));
+});
+
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
