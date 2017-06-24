@@ -32,6 +32,14 @@ class File extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function uploads()
+    {
+        return $this->hasMany(Upload::class);
+    }
+
+    /**
      * @param array $properties
      */
     public function createApproval(array $properties): void

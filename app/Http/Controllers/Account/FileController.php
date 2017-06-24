@@ -46,10 +46,7 @@ class FileController extends Controller
     {
         $this->authorize('touch', $file);
 
-        $file->update(array_merge(
-            $request->only(['title', 'overview_short', 'overview', 'price']),
-            ['finished' => true]
-        ));
+        $file->update($this->fileFields($request));
 
         return redirect()->route('account.files.index')
             ->withSuccess('Новый файл успешно создан.');
@@ -88,9 +85,9 @@ class FileController extends Controller
     {
         $this->authorize('touch', $file);
 
-        $approval = $file->approvals()->latest()->first();
+        $approvals = $file->approvals()->latest()->first();
 
-        return view('account.files.edit', compact('file', 'approval'));
+        return view('account.files.edit', compact('file', 'approvals'));
     }
 
     /**
@@ -105,5 +102,17 @@ class FileController extends Controller
             'price' => 0,
             'finished' => false,
         ]);
+    }
+
+    /**
+     * @param StoreFileRequest $request
+     * @return array
+     */
+    protected function fileFields(StoreFileRequest $request): array
+    {
+        return array_merge(
+            $request->only(['title', 'overview_short', 'overview', 'price']),
+            ['finished' => true]
+        );
     }
 }
