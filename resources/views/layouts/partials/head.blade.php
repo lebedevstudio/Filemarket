@@ -6,3 +6,8 @@
 <title>{{ config('app.name', 'Laravel') }}</title>
 
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<script>
+    window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+    ]) !!};
+</script>

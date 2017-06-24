@@ -9,6 +9,10 @@
         {{ csrf_field() }}
 
         <div class="field">
+            <div id="file" class="dropzone"></div>
+        </div>
+
+        <div class="field">
             <label for="title" class="label">Название</label>
             <p class="control">
                 <input type="text" name="title" id="title" class="input{{ $errors->has('title') ? ' is-danger' : '' }}">
@@ -59,4 +63,8 @@
             <p>Прежде чем ваш курс будет опубликован, он будет рассмотрен нашими администраторам.</p>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    @include('files.partials.scripts.file_upload')
 @endsection
