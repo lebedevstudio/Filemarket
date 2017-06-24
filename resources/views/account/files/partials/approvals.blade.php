@@ -7,19 +7,19 @@
 
     <div class="message-body">
         <div class="content">
-            @if($approval->title !== $file->title)
+            @if($approvals->title !== $file->title)
                 <strong>Название</strong>
-                <p>{{ $approval->title }}</p>
+                <p>{{ $approvals->title }}</p>
             @endif
 
-            @if($approval->overview_short !== $file->overview_short)
+            @if($approvals->overview_short !== $file->overview_short)
                 <strong>Краткое описание</strong>
-                <p>{{ $approval->overview_short }}</p>
+                <p>{{ $approvals->overview_short }}</p>
             @endif
 
-            @if($approval->overview !== $file->overview)
+            @if($approvals->overview !== $file->overview)
                 <strong>Описание</strong>
-                <p>{{ $approval->overview }}</p>
+                <p>{{ $approvals->overview }}</p>
             @endif
         </div>
     </div>

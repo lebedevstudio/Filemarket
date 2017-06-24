@@ -5,8 +5,8 @@
         Редактирование: {{ $file->title }}
     </h1>
 
-    @if($approval)
-        @include('account.files.partials.approval', compact('approval', 'file'))
+    @if($approvals)
+        @include('account.files.partials.approvals', compact('approvals', 'file'))
     @endif
 
     <form action="{{ route('account.files.update', $file) }}" method="post" class="form">
